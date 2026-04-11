@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 from gtts import gTTS
+from flask import Flask
+from threading import Thread
 import asyncio
 import os
 import re
@@ -61,3 +63,14 @@ async def on_ready():
     print(f'✅ Bot พร้อมแล้ว: {bot.user}')
 
 bot.run(os.environ['DISCORD_TOKEN'])
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Bot is alive!"
+
+def run_web():
+    app.run(host='0.0.0.0', port=8080)
+
+Thread(target=run_web, daemon=True).start()
